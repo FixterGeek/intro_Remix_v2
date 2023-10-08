@@ -4,17 +4,21 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "tailwind-dev": "npx concurrently \"tailwindcss -w -i tailwind.css -o app/styles/style.css\" \"remix dev --manual\" ",
+    "tailwind-prod": "tailwindcss -m -i tailwind.css -o app/styles/style.css && npm run build",
     "build": "remix build",
-    "dev": "remix dev --manual",
+    "dev": "npm run tailwind-dev",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@prisma/client": "^5.4.1",
     "@remix-run/css-bundle": "^2.0.1",
     "@remix-run/node": "^2.0.1",
     "@remix-run/react": "^2.0.1",
     "@remix-run/serve": "^2.0.1",
     "isbot": "^3.6.8",
+    "prisma": "^5.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
