@@ -1,6 +1,6 @@
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { useActionData, useLoaderData } from "@remix-run/react";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 
 const prisma = new PrismaClient();
 
@@ -38,7 +38,7 @@ export default function Index() {
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-200">
-      <form
+      <Form
         method="post"
         className="min-w-[320px] bg-white shadow rounded-xl pt-8 pb-6 px-6"
       >
@@ -61,7 +61,7 @@ export default function Index() {
         >
           Actualizar
         </button>
-      </form>
+      </Form>
 
       {/* Toast */}
       {actionData?.ok && (
