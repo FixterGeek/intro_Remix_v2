@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "tailwind-dev": "npx concurrently \"tailwindcss -w -i tailwind.css -o app/styles/style.css\" \"remix dev --manual\" ",
-    "tailwind-prod": "tailwindcss -m -i tailwind.css -o app/styles/style.css && npm run build",
-    "build": "remix build",
+    "tailwind-prod": "tailwindcss -m -i tailwind.css -o app/styles/style.css && remix build",
+    "build": "npm run tailwind-prod",
     "dev": "npm run tailwind-dev",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc"
