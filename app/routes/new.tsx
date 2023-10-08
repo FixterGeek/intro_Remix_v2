@@ -14,7 +14,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const id = formData.get("id");
   if (id) {
     await prisma.user.update({
-      where: { id: Number(id) },
+      where: { id: String(id) },
       data,
     });
   } else {
