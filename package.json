@@ -12,6 +12,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@netlify/remix-adapter": "^1.0.0",
     "@prisma/client": "^5.4.1",
     "@remix-run/css-bundle": "^2.0.1",
     "@remix-run/node": "^2.0.1",
