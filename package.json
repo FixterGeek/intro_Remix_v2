@@ -4,8 +4,9 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "postinstall": "prisma generate",
     "tailwind-dev": "npx concurrently \"npx tailwindcss -w -i tailwind.css -o app/styles/style.css\" \"remix dev --manual\" ",
-    "tailwind-prod": "npx tailwindcss -m -i tailwind.css -o app/styles/style.css && prisma generate && remix build",
+    "tailwind-prod": "npx tailwindcss -m -i tailwind.css -o app/styles/style.css && remix build",
     "build": "npm run tailwind-prod",
     "dev": "npm run tailwind-dev",
     "start": "remix-serve ./build/index.js",
