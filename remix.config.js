@@ -5,6 +5,7 @@ const baseConfig =
         serverBuildPath: ".netlify/functions-internal/server.js",
       }
     : undefined;
+
 /** @type {import('@remix-run/dev').AppConfig} */
 export default {
   ...baseConfig,
