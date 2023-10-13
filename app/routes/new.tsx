@@ -1,40 +1,32 @@
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  // useActionData,
+  // useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
+import { twMerge } from "tailwind-merge";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient(); // 🤖 Agrega el cliente de la base de datos
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
-  const data = {
-    displayName: String(formData.get("displayName")),
-    email: String(formData.get("email")),
-  };
-  // Aquí podemos validar con zod @TODO
-  const id = formData.get("id");
-  if (id) {
-    await prisma.user.update({
-      where: { id: String(id) },
-      data,
-    });
-  } else {
-    await prisma.user.create({ data }); // podríamos capturar un error con try
-  }
+  // 🤖 Guarda el usuario aquí
   return { ok: true }; // Siempre devuelve por lo menos null en un action
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
-  const email = url.searchParams.get("email");
-  if (!email) return { email: "", displayName: "", id: null };
-  const user = await prisma.user.findUnique({ where: { email } });
-  // @TODO Validar que el usuario exista o 404
-  return user ?? { email: "", displayName: "", id: null };
+  // 🤖 Consigue al usuario a partir de los Search Params
+  return null;
 };
 
 export default function Index() {
-  const { email, displayName, id } = useLoaderData<typeof loader>();
-  const actionData = useActionData<typeof action>();
+  // 🤖 Consigue los datos del loader
+  // 🤖 Consigue los datos del action (feedback)
+  const navigation = useNavigation();
+
+  // states
+  const isDisabled = navigation.state !== "idle";
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-200">
@@ -42,33 +34,31 @@ export default function Index() {
         method="post"
         className="min-w-[320px] bg-white shadow rounded-xl pt-8 pb-6 px-6"
       >
-        <input type="hidden" name="id" value={id ?? undefined} />
+        {/* <input type="hidden" name="id" value={id ?? undefined} /> 🤖 Agrega el id para la edición */}
         <TextField
           placeholder="Tu nombre"
           name="displayName"
           label="Nombre de usuario"
-          defaultValue={displayName ?? ""}
+          // defaultValue={displayName ?? ""} 🤖 Agrega los valores por default
         />
         <TextField
           placeholder="Tu correo"
           name="email"
           label="Correo"
-          defaultValue={email}
+          // defaultValue={email} // 🤖 Agrega los valores por default
         />
         <button
-          className="mt-6 bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-3 px-4 rounded-lg w-full hover:from-indigo-600 hover:to-blue-600"
-          type="submit"
+          disabled={isDisabled}
+          className={twMerge(
+            "mt-6 bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-3 px-4 rounded-lg w-full hover:from-indigo-600 hover:to-blue-600 disabled:from-gray-500 disabled:to-gray-800"
+          )}
+          type="submit" // 👀 Esto es muy importante
         >
-          Actualizar
+          {navigation.state !== "idle" ? "Cargando..." : "Guardar"}
         </button>
       </Form>
 
-      {/* Toast */}
-      {actionData?.ok && (
-        <div className="bg-green-200/50 py-4 px-8 rounded-xl absolute bottom-8 text-lg text-green-700">
-          <p>✅ El usuario se ha guardado con éxito.</p>
-        </div>
-      )}
+      {/* 🤖 Agrega el Toast aquí */}
     </main>
   );
 }
