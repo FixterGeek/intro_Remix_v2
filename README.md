@@ -30,7 +30,7 @@ Venga pues, si quieres mejorar aprendiendo a crear aplicaciones web completas y 
 
 `El sábado` **14 de octubre, 2023. 10:00am - 5:15pm**.
 
-Consigue el repo [aquí](https://github.com/FixterGeek/intro_Remix_v2), recuerda que **es completamente gratuito**. 🤯
+Consigue tu entrada [aquí](https://fixtergeek.com/eventos/remix_oct_2023), recuerda que **es completamente gratuito**. 🤯
 
 Nos vemos adentro. 👨🏻‍💻
 
@@ -39,6 +39,10 @@ Abrazo.
 Bliss. 🤓
 
 ## Enlaces relacionados
+
+Inscripción al taller
+
+https://fixtergeek.com/eventos/remix_oct_2023
 
 Repositorio del taller
 
