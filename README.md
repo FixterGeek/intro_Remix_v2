@@ -6,7 +6,7 @@ En este taller **sabatino de seis horas**, vamos a crear una aplicación **Fulls
 
 Lo único que necesitas es tener **TODA LA INTENCIÓN** de aprender y de invertir un sábado de la mejor forma: **estudiando**. 🤓 Además de sentirte cómodo con **JavaScript**, **HTML** y no temerle a tu terminal. ◾️
 
-!https://i.imgur.com/MbmQDZC.png
+![saturday](https://i.imgur.com/MbmQDZC.png)
 
 🥓🍳 Comenzamos a las **10 am** para que ya lleguemos desayunados.
 
