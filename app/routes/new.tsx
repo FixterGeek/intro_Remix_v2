@@ -1,18 +1,33 @@
 // import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Form,
+  useActionData,
   // useActionData,
   // useLoaderData,
   useNavigation,
 } from "@remix-run/react";
 import { twMerge } from "tailwind-merge";
 
-// const prisma = new PrismaClient(); // 🤖 Agrega el cliente de la base de datos
+const prisma = new PrismaClient(); // 🤖 Agrega el cliente de la base de datos
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  // 🤖 Guarda el usuario aquí
-  return { ok: true }; // Siempre devuelve por lo menos null en un action
+  // De donde sacamos los datos
+  const formData = await request.formData(); // Sacamos el FormData del request ✅
+  const dataObject = {
+    email: formData.get("email") as string,
+    displayName: String(formData.get("displayName")),
+  };
+  // 🤖 Guarda el usuario aquí <= your job 🔥
+  try {
+    await prisma.user.create({
+      data: dataObject,
+    });
+    return { ok: true };
+  } catch (error: unknown) {
+    return { ok: false }; // Siempre devuelve por lo menos null en un action
+  }
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -23,6 +38,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   // 🤖 Consigue los datos del loader
   // 🤖 Consigue los datos del action (feedback)
+  const actionData = useActionData<typeof action>(); // undefined | {ok:boolean}
   const navigation = useNavigation();
 
   // states
@@ -59,6 +75,16 @@ export default function Index() {
       </Form>
 
       {/* 🤖 Agrega el Toast aquí */}
+      {actionData?.ok && (
+        <p className="fixed bottom-4 rounded-lg p-4 bg-green-500 text-green-700">
+          ¡Usuario creado con exito! ✅
+        </p>
+      )}
+      {actionData?.ok === false && (
+        <p className="fixed top-8 rounded-lg p-4 bg-red-300 text-red-900">
+          Este correo ya está en uso, 😵‍💫 prueba con otro
+        </p>
+      )}
     </main>
   );
 }
