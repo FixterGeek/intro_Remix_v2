@@ -4,6 +4,7 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Form,
   useActionData,
+  useLoaderData,
   // useActionData,
   // useLoaderData,
   useNavigation,
@@ -31,12 +32,20 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+  const email = url.searchParams.get("email");
+  if (!email) return { email: undefined, displayName: undefined }; // Negative first
   // 🤖 Consigue al usuario a partir de los Search Params
-  return null;
+  const user = await prisma.user.findUnique({
+    where: { email: String(email) },
+  });
+  if (!user) return { email: undefined, displayName: undefined };
+  return user;
 };
 
 export default function Index() {
   // 🤖 Consigue los datos del loader
+  const { email, displayName } = useLoaderData<typeof loader>();
   // 🤖 Consigue los datos del action (feedback)
   const actionData = useActionData<typeof action>(); // undefined | {ok:boolean}
   const navigation = useNavigation();
@@ -55,13 +64,13 @@ export default function Index() {
           placeholder="Tu nombre"
           name="displayName"
           label="Nombre de usuario"
-          // defaultValue={displayName ?? ""} 🤖 Agrega los valores por default
+          defaultValue={displayName} // 🤖 Agrega los valores por default
         />
         <TextField
           placeholder="Tu correo"
           name="email"
           label="Correo"
-          // defaultValue={email} // 🤖 Agrega los valores por default
+          defaultValue={email} // 🤖 Agrega los valores por default
         />
         <button
           disabled={isDisabled}
