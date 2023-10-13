@@ -18,10 +18,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     email: formData.get("email") as string,
     displayName: String(formData.get("displayName")),
   };
+
   // 🤖 Editando el usuario
-  if (formData.has("id")) {
+  if (formData.get("id")) {
     await prisma.user.update({
-      where: { id: Number(formData.get("id")) },
+      where: { id: String(formData.get("id")) },
       data: dataObject,
     });
     // validar que el usuario exista
