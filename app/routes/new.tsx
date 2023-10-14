@@ -4,7 +4,7 @@ import {
   Form,
   // useActionData,
   // useLoaderData,
-  useNavigation,
+  // useNavigation,
 } from "@remix-run/react";
 import { twMerge } from "tailwind-merge";
 
@@ -23,10 +23,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   // 🤖 Consigue los datos del loader
   // 🤖 Consigue los datos del action (feedback)
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   // states
-  const isDisabled = navigation.state !== "idle";
+  // const isDisabled = navigation.state !== "idle";
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-200">
@@ -48,13 +48,14 @@ export default function Index() {
           // defaultValue={email} // 🤖 Agrega los valores por default
         />
         <button
-          disabled={isDisabled}
+          // disabled={isDisabled}
           className={twMerge(
             "mt-6 bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-3 px-4 rounded-lg w-full hover:from-indigo-600 hover:to-blue-600 disabled:from-gray-500 disabled:to-gray-800"
           )}
           type="submit" // 👀 Esto es muy importante
         >
-          {navigation.state !== "idle" ? "Cargando..." : "Guardar"}
+          {/* {navigation.state !== "idle" ? "Cargando..." : "Guardar"} */}
+          Guardar
         </button>
       </Form>
 
